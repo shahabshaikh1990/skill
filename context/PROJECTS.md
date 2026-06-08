@@ -4,7 +4,7 @@
 ---
 
 ## 1. LinkedIn Visibility & Freelance Documentation Consulting
-**Status:** Planning — starting next session
+**Status:** In Progress — profile optimized, first post pending
 **Goal:** Make exporters come to me, build toward ₹5 lakh side income
 
 **Positioning:**
@@ -27,8 +27,11 @@
 - 2–3 clients × ₹8K–15K/month = ₹25K–45K/month side income
 - Timeline to ₹5 lakh: 12–18 months realistically
 
+**Done:**
+- [x] LinkedIn headline + About section optimized (ready to paste)
+
 **Next Steps:**
-- [ ] Paste LinkedIn headline + summary for Claude to optimize
+- [ ] Paste optimized headline + About into LinkedIn profile
 - [ ] Draft and publish first post
 - [ ] Set up simple client inquiry template
 
@@ -122,28 +125,55 @@
 **Fix:** Build practical projects alongside learning
 
 **Tools actively using:**
-- Claude Code
-- claude-mem (forked, install pending)
-- MemPalace (forked, install pending)
+- Claude Code + RTK (global hook) ✓
+- claude-mem ✓ working
+- MemPalace ✓ connected
+- obsidian-mcp ✓ connected
+- Odysseus stack ✓ running (localhost:7000)
 - Ollama / llama3.2
 - ScrapeGraphAI
 
 ---
 
+## 8. Obsidian Second Brain
+**Status:** In Progress
+**Vault:** `C:\Users\shaha\OneDrive\Documents\Obsidian Vault`
+**MCP:** obsidian-mcp ✓ connected
+
+**Done:**
+- [x] obsidian-mcp connected via Claude Code
+- [x] 815 WhatsApp links extracted and categorized into 11 notes (ready to copy)
+
+**Pending:**
+- [ ] Create `shahabshaikh1990/brain` GitHub repo (private)
+- [ ] Install Obsidian Git plugin → point to brain repo
+- [ ] Copy 11 WhatsApp .md files into vault
+- [ ] Review and organize 260 YouTube Shorts + 23 videos
+
+---
+
 ## Priority Order (as of June 2026)
-1. LinkedIn optimization + first post — **this week**
-2. Install claude-mem + MemPalace properly
-3. Email Reply Assistant (Tool 1) — first automation win
-4. MerchantAntiques Meta ads
-5. Instagram Saves Engine
-6. Dropshipping exploration
+1. **LinkedIn first post** — this week (profile already optimized)
+2. **Create brain repo + Obsidian Git setup** — enables auto-sync
+3. **Fix plugin:mempalace** — change `python` → `python3`
+4. **Copy WhatsApp notes into vault**
+5. **Email Reply Assistant (Tool 1)** — first automation win
+6. **MerchantAntiques Meta ads**
+7. **Instagram Saves Engine**
 
 ---
 
 ## Pending Setup Checklist
-- [ ] Install claude-mem: `npx claude-mem install`
-- [ ] Install MemPalace: `pip install mempalace`
-- [ ] Paste LinkedIn profile details for Claude to optimize
+- [x] Install claude-mem
+- [x] Install MemPalace
+- [x] Connect obsidian-mcp
+- [x] Hook RTK globally into Claude Code
+- [x] LinkedIn headline + About section optimized
+- [ ] Paste LinkedIn headline + About into profile
 - [ ] Draft and publish first LinkedIn post
-- [ ] Build Email Reply Assistant (Tool 1)
-- [ ] Create Obsidian vault GitHub repo + install Obsidian Git plugin
+- [ ] Create `shahabshaikh1990/brain` GitHub repo (private)
+- [ ] Install Obsidian Git plugin → point to brain repo
+- [ ] Copy 11 WhatsApp .md files into vault (`C:\Users\shaha\Downloads\*.md` → vault)
+- [ ] Fix plugin:mempalace: change `python` → `python3` in `.claude.json`
+- [ ] Fix context-sync 401 auth bug
+- [ ] Install ECC plugin in Claude Code

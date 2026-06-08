@@ -16,10 +16,24 @@
 - **Laptop:** ASUS ExpertBook P1503CVA, Windows
 - **Python env:** Miniforge3 conda
 - **AI tools:** Claude Code (terminal), claude.ai (mobile app)
-- **Memory tools:** claude-mem + MemPalace (forked, not yet fully installed)
 - **Security:** Windows Defender + Malwarebytes Free
-- **Local models:** Ollama (llama3.2)
 - **Investing:** Groww (mutual funds + demat), SIP ₹10K/month
+
+### Memory & AI Stack (Active)
+- **claude-mem** ✓ working — auto-captures sessions, web viewer at localhost:37777
+- **MemPalace** ✓ connected
+- **obsidian-mcp** ✓ connected — vault at `C:\Users\shaha\OneDrive\Documents\Obsidian Vault`
+- **RTK** ✓ hooked globally into Claude Code
+- **Odysseus stack** ✓ running at localhost:7000 (ChromaDB + SearXNG + ntfy, 10 Anthropic models)
+- **Local models:** Ollama (llama3.2)
+- **context-sync** — connected but set_project has 401 auth bug (pending fix)
+- **plugin:mempalace** — python3 path error (pending fix: change `python` → `python3`)
+
+### Obsidian
+- **Version:** 1.12.7
+- **Vault path:** `C:\Users\shaha\OneDrive\Documents\Obsidian Vault`
+- **MCP command:** `claude mcp add obsidian-mcp -- npx -y obsidian-mcp "C:\Users\shaha\OneDrive\Documents\Obsidian Vault"`
+- **Obsidian Git:** pending setup (brain repo not yet created)
 
 ---
 
@@ -50,7 +64,8 @@
 
 ## LinkedIn
 - Profile: linkedin.com/in/shahab-shaikh-562522b1
-- Status: Needs optimization for "export documentation specialist" positioning
+- Headline + About section: optimized and ready to paste
+- Status: First post not yet published
 
 ---
 
