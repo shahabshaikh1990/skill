@@ -3,39 +3,46 @@
 ## What this system does
 
 ```
-Obsidian vault (GitHub) ←──Obsidian Git pulls──  GitHub repo: brain
-                                                        ↑
-                                              brain-update.sh pushes
-                                                        ↑
-                                           Stop hook runs at session end
-                                                        ↑
-                                         Claude Code session (web or local)
+Obsidian vault (Windows)
+        ↕  Obsidian Git plugin auto-sync
+GitHub repo: shahabshaikh1990/brain  (private)
+        ↑
+brain-update.sh pushes at session end
+        ↑
+Claude Code Stop hook (CCR web or local terminal)
 ```
 
-- `skill/context/` = source of truth RIGHT NOW (until vault repo exists)
-- `brain/context/` = source of truth AFTER you complete this setup
+- `skill/context/` = source of truth **RIGHT NOW** (until brain repo is set up)
+- `brain/context/` = source of truth **AFTER** you complete Step 1–3 below
 - All 4 repo CLAUDE.md files are auto-rebuilt at session end
 
 ---
 
-## Step 1 — Create the GitHub vault repo
+## Step 1 — Create the GitHub brain repo
 
-Go to github.com → New repository
-- Name: `brain` (or `obsidian-vault`, `second-brain` — your choice)
-- Private: yes
-- Initialize with README: no
+Go to github.com → **New repository**
+- **Name:** `brain`
+- **Private:** yes
+- **Initialize with README:** no (empty repo)
+
+Click "Create repository". Copy the HTTPS URL shown.
 
 ---
 
-## Step 2 — Clone + move context files
+## Step 2 — Clone + move context files (Windows PowerShell)
 
-Run these commands on your Windows machine (Git Bash or PowerShell):
+```powershell
+# Clone the brain repo
+git clone https://github.com/shahabshaikh1990/brain.git C:\Users\shaha\brain
 
-```bash
-git clone https://github.com/shahabshaikh1990/brain.git
-cd brain
-mkdir context
-# Copy your existing context files here (from skill/context/ or start fresh)
+# Create context folder
+New-Item -ItemType Directory -Path "C:\Users\shaha\brain\context"
+
+# Copy existing context files from skill repo
+Copy-Item "C:\Users\shaha\skill\context\*" "C:\Users\shaha\brain\context\" -Force
+
+# Push to GitHub
+cd C:\Users\shaha\brain
 git add .
 git commit -m "init: personal knowledge base"
 git push
@@ -45,60 +52,66 @@ git push
 
 ## Step 3 — Set up Obsidian Git plugin
 
-1. Open Obsidian → Settings → Community plugins → Browse
+1. Open Obsidian → **Settings** → **Community plugins** → **Browse**
 2. Search: **Obsidian Git** → Install → Enable
-3. Settings → Obsidian Git:
-   - Custom base path: point to the cloned `brain/` folder
-   - Auto pull interval: 5 minutes
-   - Auto push on commit: ON
-   - Commit message: `vault: {{date}}`
+3. Go to **Settings** → **Obsidian Git**:
+   - **Custom base path**: leave empty (Obsidian uses its vault as the git root)
+4. Point your vault AT the brain repo:
+   - Close Obsidian
+   - **Move** (or point) your vault to `C:\Users\shaha\brain\`
+     - OR: Open existing vault at `C:\Users\shaha\brain\` if you keep the current vault separate
+   - Reopen Obsidian
 
-Now Obsidian and GitHub stay in sync automatically.
+5. In Obsidian Git settings:
+   - **Auto pull interval:** 5 minutes
+   - **Auto push on commit:** ON
+   - **Commit message:** `vault: {{date}}`
 
----
-
-## Step 4 — Tell Claude Code about the vault repo
-
-In your next Claude Code web session, say:
-> "My Obsidian vault repo is shahabshaikh1990/brain — add it to this session"
-
-Claude will use `brain/context/` as the source of truth instead of `skill/context/`.
+Obsidian and GitHub now stay in sync automatically.
 
 ---
 
-## Step 5 — Local MCP (for Claude Code terminal on Windows)
+## Step 4 — Copy WhatsApp notes into vault
 
-This lets Claude read/write Obsidian notes directly when using the terminal.
-
-### Install Obsidian Local REST API plugin
-
-1. Obsidian → Settings → Community plugins → Browse
-2. Search: **Local REST API** → Install → Enable
-3. Settings → Local REST API:
-   - Copy the **API Key** shown (save it somewhere)
-   - Default port: 27124
-
-### Add MCP to Claude Code on Windows
-
-Edit `%APPDATA%\Claude\claude_desktop_config.json` (Claude Desktop)
-OR `%USERPROFILE%\.claude\settings.json` (Claude Code terminal):
-
-```json
-{
-  "mcpServers": {
-    "obsidian": {
-      "command": "npx",
-      "args": ["-y", "mcp-obsidian"],
-      "env": {
-        "OBSIDIAN_API_KEY": "paste-your-api-key-here",
-        "OBSIDIAN_HOST": "https://127.0.0.1:27124"
-      }
-    }
-  }
-}
+```powershell
+# Copy the 11 WhatsApp .md files into the vault
+Copy-Item "C:\Users\shaha\Downloads\*.md" "C:\Users\shaha\brain\" -Force
 ```
 
-Restart Claude Code. You'll now have tools like:
+Then open Obsidian — the notes will appear in the file tree.
+
+---
+
+## Step 5 — Hook auto-update to brain repo (CCR web sessions)
+
+After brain repo is cloned in a CCR session, the `rebuild_brain.py` script
+automatically detects and uses `brain/context/` instead of `skill/context/`.
+
+The scripts live in `skill/scripts/` and are always available:
+
+```bash
+# If hooks are missing at start of a CCR session, run:
+bash /home/user/skill/scripts/setup-hooks.sh
+```
+
+This re-installs `brain-update.sh` into `~/.claude/` and verifies the Stop hook.
+
+---
+
+## Step 6 — Local MCP (already done)
+
+The `obsidian-mcp` MCP server is already connected in Claude Code terminal:
+
+```
+claude mcp add obsidian-mcp -- npx -y obsidian-mcp "C:\Users\shaha\OneDrive\Documents\Obsidian Vault"
+```
+
+Once the vault is pointed to the brain repo, update this path to:
+```
+claude mcp add obsidian-mcp -- npx -y obsidian-mcp "C:\Users\shaha\brain"
+```
+
+Available tools after reconnect:
 - `obsidian_list_files_in_vault`
 - `obsidian_get_file_contents`
 - `obsidian_simple_search`
@@ -111,24 +124,27 @@ Restart Claude Code. You'll now have tools like:
 
 | What changed | What to do |
 |---|---|
-| Personal info (job, setup) | Edit `skill/context/ABOUTME.md` |
-| Project status/next steps | Edit `skill/context/PROJECTS.md` |
-| Both auto-sync | Session end hook pushes → Obsidian Git pulls |
-
-**Convention:** At the end of every Claude session, update `skill/context/PROJECTS.md`
-with what changed (status updates, completed checklist items, new next steps).
-The Stop hook then auto-rebuilds all CLAUDE.md files and pushes.
+| Personal info (job, setup) | Edit `brain/context/ABOUTME.md` in Obsidian |
+| Project status/next steps | Edit `brain/context/PROJECTS.md` in Obsidian |
+| Session ends | brain-update.sh auto-pushes → Obsidian Git auto-pulls |
 
 ---
 
 ## File map
 
 ```
-brain/ (GitHub repo = Obsidian vault)
+brain/ (GitHub repo = Obsidian vault root)
 ├── context/
-│   ├── ABOUTME.md      ← personal context (source of truth)
-│   ├── PROJECTS.md     ← all projects (source of truth)
-│   ├── SESSIONS.md     ← auto-generated session log
-│   └── OBSIDIAN_SETUP.md ← this file
-└── ... (other Obsidian notes)
+│   ├── ABOUTME.md          ← personal context (source of truth)
+│   ├── PROJECTS.md         ← all projects (source of truth)
+│   ├── SESSIONS.md         ← auto-generated session log
+│   └── OBSIDIAN_SETUP.md   ← this file
+└── ... (other Obsidian notes, WhatsApp exports, etc.)
+```
+
+```
+skill/scripts/
+├── rebuild_brain.py        ← rewrites Developer Context in all CLAUDE.md files
+├── brain-update.sh         ← Stop hook: logs session + calls rebuild_brain.py
+└── setup-hooks.sh          ← installs hooks into ~/.claude/ (run once per CCR session)
 ```
