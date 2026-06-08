@@ -21,7 +21,7 @@ SKIP_COMMIT = set(sys.argv[1:])
 
 # ── Find source of truth ──────────────────────────────────────────────────────
 CONTEXT_DIR = None
-for candidate in [REPOS_BASE / 'brain' / 'context', REPOS_BASE / 'skill' / 'context']:
+for candidate in [REPOS_BASE / 'Brain-2' / 'context', REPOS_BASE / 'brain' / 'context', REPOS_BASE / 'skill' / 'context']:
     if (candidate / 'ABOUTME.md').exists() and (candidate / 'PROJECTS.md').exists():
         CONTEXT_DIR = candidate
         break

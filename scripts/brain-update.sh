@@ -18,7 +18,10 @@ DATE=$(date '+%Y-%m-%d')
 DATETIME=$(date '+%Y-%m-%d %H:%M')
 
 # ── Determine active context repo ─────────────────────────────────────────────
-if [[ -d "$BRAIN_REPO/context" && -f "$BRAIN_REPO/context/ABOUTME.md" ]]; then
+BRAIN2_REPO="$HOME_DIR/Brain-2"
+if [[ -d "$BRAIN2_REPO/context" && -f "$BRAIN2_REPO/context/ABOUTME.md" ]]; then
+  CONTEXT_REPO="$BRAIN2_REPO"
+elif [[ -d "$BRAIN_REPO/context" && -f "$BRAIN_REPO/context/ABOUTME.md" ]]; then
   CONTEXT_REPO="$BRAIN_REPO"
 else
   CONTEXT_REPO="$SKILL_REPO"
